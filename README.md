@@ -11,8 +11,9 @@ https://re26-dashboard--landing-mobile-6arpfa6p.web.app
 The channel expires 7 days after each deploy. You can also run it by hand:
 Actions > Deploy preview channel > Run workflow.
 
-Needs the repository secret `FIREBASE_SERVICE_ACCOUNT_RE26` (the JSON key of a
-service account with the Firebase Hosting Admin role). Never commit keys.
+Sign-in is keyless (Workload Identity Federation): only pushes to `main` of
+this repo may act as `github-preview@re26-dashboard`, which has only the
+Firebase Hosting Admin role. There are no secrets in this repo. Never commit keys.
 
 ## Root files
 
