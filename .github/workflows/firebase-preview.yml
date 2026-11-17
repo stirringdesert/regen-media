@@ -1,0 +1,40 @@
+# Deploys landing-preview/ to the Firebase Hosting PREVIEW channel "landing-mobile"
+# on project re26-dashboard. It never deploys to the live site.
+# URL: https://re26-dashboard--landing-mobile-6arpfa6p.web.app
+name: Deploy preview channel
+
+on:
+  push:
+    branches: [main]
+    paths: ['landing-preview/**']
+  workflow_dispatch:
+
+concurrency:
+  group: firebase-preview
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the service account secret
+        env:
+          SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RE26 }}
+        run: |
+          if [ -z "$SA" ]; then
+            echo "::error::Secret FIREBASE_SERVICE_ACCOUNT_RE26 is missing. Add it in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Deploy to preview channel landing-mobile
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RE26 }}
+          projectId: re26-dashboard
+          channelId: landing-mobile   # never "live"
+          expires: 7d
+          entryPoint: landing-preview

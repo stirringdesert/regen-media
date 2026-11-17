@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scroll tests</title>
+<style>body{margin:0;padding:20px 16px;background:#111;color:#eee;font:16px/1.45 -apple-system,system-ui}a{display:block;margin:8px 0;padding:14px 16px;border-radius:12px;background:#222;color:#fff;text-decoration:none}b{color:#ff2d55;margin-right:8px}small{color:#999}</style></head><body>
+<h1 style="font-size:20px">Scroll tests (round 28)</h1>
+<p><small>Scroll by hand from the hero through all four shows into About for about 10 seconds. The red badge shows fps, drops (frames over 25 ms) and the worst frame while scrolling. Tap the badge to reset it. Note for each one: smoother, same or worse than N.</small></p>
+<a href="page.html?v=N"><b>N</b>As built (same as live)</a>
+<a href="page.html?v=L"><b>L</b>Graphics loops off</a>
+<a href="page.html?v=J"><b>J</b>Card animations off (cards freeze, scroll only)</a>
+<a href="page.html?v=W"><b>W</b>3D scenes off (hero, About, footer)</a>
+<a href="page.html?v=R"><b>R</b>Card rounded clipping off</a>
+<a href="page.html?v=S"><b>S</b>CSS scroll animations off (old JS path)</a>
+<a href="page.html?v=Z"><b>Z</b>All of L, W, R, C, J together</a>
+<a href="page.html?v=E"><b>E</b>Cards don't stick (diagnostic, looks broken)</a>
+<p><small>Extra: C masks/blend/filters off, A graphics hidden, K container sizing off. Letters combine, e.g. page.html?v=LW.</small></p>
+</body></html>
