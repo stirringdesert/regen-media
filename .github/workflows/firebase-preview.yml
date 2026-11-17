@@ -1,0 +1,38 @@
+# Deploys landing-preview/ to the Firebase Hosting PREVIEW channel "landing-mobile"
+# on project re26-dashboard. It never deploys to the live site.
+# URL: https://re26-dashboard--landing-mobile-6arpfa6p.web.app
+# Keyless: GitHub's OIDC token is exchanged for Google credentials (Workload
+# Identity Federation), allowed only for this repo's main branch. No secrets.
+name: Deploy preview channel
+
+on:
+  push:
+    branches: [main]
+    paths: ['landing-preview/**']
+  workflow_dispatch:
+
+concurrency:
+  group: firebase-preview
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/928291115089/locations/global/workloadIdentityPools/github/providers/regen-media
+          service_account: github-preview@re26-dashboard.iam.gserviceaccount.com
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Deploy to preview channel landing-mobile (never live)
+        working-directory: landing-preview
+        run: npx -y firebase-tools@14 hosting:channel:deploy landing-mobile --project re26-dashboard --expires 7d --non-interactive
