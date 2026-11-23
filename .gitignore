@@ -2,3 +2,22 @@
 *.local*
 SECRETS*
 *service-account*.json
+
+# build output, previews, caches, test dumps (keep the repo to sources and deployed files)
+__pycache__/
+*.pyc
+node_modules/
+*.log
+*.tmp
+*.bak
+.cache/
+tmp/
+_tmp/
+screenshots/
+*screenshot*.png
+shot-*.png
+*-preview.png
+test-results/
+playwright-report/
+traces/
+Thumbs.db
