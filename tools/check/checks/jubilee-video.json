@@ -1,0 +1,7 @@
+{
+ "type": "media",
+ "title": "Jubilee 5.12 video (Lushin) - transparent show graphic, MOV from archive zip",
+ "source": ["archive/downloads/5-12-yubilei-video.zip"],
+ "zipEntry": "5-yubilei-lushin.mov",
+ "expect": { "width": 1920, "height": 1080, "fps": 30, "minSec": 3, "maxSec": 30, "codecs": ["qtrle", "prores", "h264", "hevc", "vp9"], "maxMB": 50, "audio": false, "alpha": true, "loop": false, "loopMaxPct": 1 }
+}

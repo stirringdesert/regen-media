@@ -1,0 +1,13 @@
+{
+ "type": "print",
+ "title": "Festival booklet A5 portrait (148x210 + 3 mm bleed), reading order. No real export yet: falls back to the synthetic 8pp fixture (RGB, one 42 dpi image, so it WARN/FAILs on purpose).",
+ "source": ["exports/booklet.pdf", "booklet/print/booklet.pdf", "tools/check/fixtures/booklet-test-8pp.pdf"],
+ "trim": [148, 210],
+ "bleed": 3,
+ "safe": 5,
+ "colorspace": "CMYK",
+ "maxMB": 100,
+ "dpi": { "warn": 300, "fail": 150 },
+ "hairlinePt": 0.25,
+ "booklet": { "order": "reading", "spreads": false, "folios": true }
+}

@@ -4,9 +4,8 @@ One entry point for every thread. Use it instead of writing your own Playwright/
 
     tools/check/check <type> <target> --level quick|sheet|full [options]
     tools/check/check web home-block --level quick
-    tools/check/check web landing --level sheet --crop '#about'
 
-`<target>` = name of `checks/<name>.json`, or a path to a config. `<type>` = a module in `types/` (now: `web`).
+`<target>` = `checks/<name>.json` name or a config path. `<type>` = a module in `types/`: `web`, `print`, `media`, `plugin`. `--source <path>` overrides the config's source.
 
 ## Output contract (all types)
 - One line per check: `PASS|WARN|FAIL name reason`, then one summary line. Exit code 0 = no FAIL (1 = FAIL, 2 = tool error).
@@ -34,10 +33,28 @@ Baseline runs and `full` use virtual time + seeded Math.random + reduced motion,
 `widths` {quick,full}, `settleMs`, `capture` {maxHeight,sheetHeight}, `diffThreshold`, `diffFailAt`, `diffCss` (hide
 non-deterministic animated art in baseline/diff runs only), `reducedMotion`, `clock`.
 
-## Adding a type (print, media, plugin)
+## print checks (PDF, SVG, PNG, TIFF) - needs poppler, ImageMagick, python3+pypdf (all in the container)
+    tools/check/check print poster-08 --level sheet
+    tools/check/check print booklet --level sheet --zoom page=1,box=10,10,60,40     # mm from page top-left, 300 dpi crop becomes the sheet
+Checks: size vs `trim`+`bleed` (PDF TrimBox too), bleed filled where art reaches the trim, nothing within `safe` mm of trim (WARN),
+fonts embedded/outlined, effective DPI of rasters (WARN <300, FAIL <150), colour space vs `colorspace` (CMYK|RGB), strokes <0.25 pt (WARN),
+transparency (`noTransparency`), booklet: page count %4 and folio/spread order (`booklet` {order reading|imposed, spreads, folios}), file size `maxMB`.
+Sheet = every page at 60 dpi with trim (cyan) and safe line (magenta). No baseline diff for print.
+Config: `source`, `trim` [w,h] mm, `bleed`, `safe`, `colorspace`, `dpi` {warn,fail}, `hairlinePt`, `maxMB`, `booklet`, `svgMmPerUnit`, `zoomDpi`.
+
+## media checks (MP4, MOV, WebM, GIF, PNG sequence dir, .zip + `zipEntry`) - ffprobe/ffmpeg
+Config `expect`: width, height, fps, minSec, maxSec, codecs[], maxMB, alpha (true = decoded frames must contain transparency), audio (true|false), loop (true = first vs last frame must match), loopMaxPct.
+Rows: res, fps, duration, codec, filesize, audio, alpha, loop (first->last % vs a normal one-frame step). Sheet = 6 evenly spaced frames on a checkerboard. Zip sources: one entry extracted to a temp dir.
+
+## plugin checks (Figma plugin folder; works on a copy, sources untouched)
+Rows: build (`build` cmd or none), manifest (id/api/editorType/main/ui/networkAccess/documentAccess), types (tsc if tsconfig), syntax (code.js + inline ui scripts),
+lint (eslint, correctness rules in lib/eslint.plugin.mjs), bundle size (`limits`), smoke (code.js + ui.html boot in the mock-Figma `harness`, no errors),
+test (`tests` = node scripts run in the copy, fail on non-zero exit or PLUGIN ERR/OVERFLOW markers), zip (committed zip vs sources).
+Sheet = ui.html at the plugin window size (read from figma.showUI, or `window`), plus a second tile after `messages`. Full = also builds the import zip and prints its path.
+
+## Adding a type
 Add `types/<type>.mjs` exporting `async run(ctx)`; do not touch `core/`. ctx gives `cfg, level, opts, report` (`pass/warn/fail/detail`),
 `outDir`, `baselineDir`, `tiles` (push `{label,png,w,h,clipH?,status?}` - core builds the sheet), `browser()`, `diff(a,b)`.
 
 ## Notes
-- Needs the pre-installed Playwright (Node). No other install. `_checks/` is git-ignored; baselines are committed (~1 MB per target).
-- Sources are never edited by the kit. Home block / landing sources live in project files, hence `$CHECK_ROOT`.
+- Needs the pre-installed Playwright (Node). No other install. `_checks/` is git-ignored; baselines are committed (~1 MB per target). Sources are never edited by the kit. Big sources live in project files (`$CHECK_ROOT`).

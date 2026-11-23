@@ -1,0 +1,12 @@
+{
+ "type": "plugin",
+ "title": "Booklet Fold - Figma plugin (plain JS, no build), mock-Figma harness",
+ "dir": "booklet/figma-plugin",
+ "build": null,
+ "limits": { "codeKB": 200, "uiKB": 400, "totalKB": 700 },
+ "harness": "booklet/test-harness/harness.html",
+ "tests": ["booklet/test-harness/th12.js"],
+ "smokeMs": 2500,
+ "messages": [],
+ "zip": { "name": "booklet-fold-plugin.zip", "dir": "booklet-fold", "files": ["manifest.json", "code.js", "ui.html", "README.md"], "compareTo": "booklet-fold-plugin.zip" }
+}

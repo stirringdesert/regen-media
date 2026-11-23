@@ -1,0 +1,13 @@
+{
+ "type": "print",
+ "title": "Poster 08 Pustota - A3 print file (CMYK, 2 mm bleed)",
+ "source": ["posters/print/poster-08-pustota-A3-bleed2mm-CMYK.pdf"],
+ "trim": [297, 420],
+ "bleed": 2,
+ "safe": 5,
+ "colorspace": "CMYK",
+ "noTransparency": true,
+ "maxMB": 50,
+ "dpi": { "warn": 300, "fail": 150 },
+ "hairlinePt": 0.25
+}

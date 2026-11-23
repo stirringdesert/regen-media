@@ -8,7 +8,7 @@ import { Report } from './report.mjs';
 import { makeSheet } from './sheet.mjs';
 import { pixelDiff } from './imgdiff.mjs';
 
-const FLAGS_WITH_VALUE = ['level', 'crop', 'hover', 'widths', 'out', 'zoom'];
+const FLAGS_WITH_VALUE = ['level', 'crop', 'hover', 'widths', 'out', 'zoom', 'source'];
 function parse(argv) {
   const o = { level: 'quick', _: [] };
   for (let i = 0; i < argv.length; i++) {
