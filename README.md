@@ -23,6 +23,10 @@ Media used by the live landing (curator videos/posters). Leave them in place.
 
 Six card graphics (SVG) for the takoy-teatr home page RE:26 block (copied to the Tilda CDN).
 
+## `tools/check/`
+
+Shared check kit (`check web|… <target> --level quick|sheet|full`); see `tools/check/README.md`. Baseline images in `tools/check/baselines/` are the one allowed screenshot exception. Output goes to git-ignored `_checks/`.
+
 ## Keep it small
 
 - One version of each file, overwritten in place; git keeps history. No `-v2`/`-final`/timestamped copies.

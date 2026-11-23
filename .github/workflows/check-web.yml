@@ -1,0 +1,20 @@
+name: Check web
+on:
+  push:
+    paths: ['landing-preview/**', 'tools/check/**']
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
+      - name: check web landing --level full
+        run: |
+          set +e
+          tools/check/check web landing --level full | tee out.txt
+          code=${PIPESTATUS[0]}
+          { echo '### check web landing --level full'; echo '```'; cat out.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $code

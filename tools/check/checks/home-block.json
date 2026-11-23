@@ -1,0 +1,70 @@
+{
+ "type": "web",
+ "title": "Home page shows block (Tilda T123 fragment)",
+ "source": [
+  "home-block/current-dark.html"
+ ],
+ "mode": "fragment",
+ "wrapper": {
+  "background": "#000",
+  "font": "Arial, sans-serif"
+ },
+ "root": ".rgtd",
+ "fonts": [
+  "RGTT Display"
+ ],
+ "required": [
+  ".rgtd",
+  ".rgtd-c",
+  ".rgtd-re",
+  ".rgtd-wm",
+  ".rgtd-lg",
+  ".rgtd-t",
+  ".rgtd-d"
+ ],
+ "overlap": [
+  [
+   ".rgtd-t",
+   ".rgtd-d"
+  ],
+  [
+   ".rgtd-t",
+   ".rgtd-ar"
+  ],
+  [
+   ".rgtd-t",
+   ".rgtd-wm"
+  ],
+  [
+   ".rgtd-t",
+   ".rgtd-lg"
+  ],
+  [
+   ".rgtd-d",
+   ".rgtd-wm"
+  ],
+  [
+   ".rgtd-tt",
+   ".rgtd-sk"
+  ],
+  {
+   "a": ".rgtd-c",
+   "b": ".rgtd-c",
+   "tol": 4
+  },
+  {
+   "a": ".rgtd-re",
+   "b": ".rgtd-c",
+   "tol": 4
+  }
+ ],
+ "settleMs": 2500,
+ "tapTargets": [
+  ".rgtd-c"
+ ],
+ "capture": {
+  "maxHeight": 1200,
+  "sheetHeight": 720
+ },
+ "diffCss": ".rgtd-art,.rgtd-bm,.rgtd-bg,.rgtd-fg{visibility:hidden!important}"
+}

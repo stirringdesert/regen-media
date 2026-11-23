@@ -1,0 +1,46 @@
+{
+ "type": "web",
+ "title": "RE:26 landing (/re26) - hero + shows + sections, full page",
+ "source": [
+  "landing/_details/preview.html",
+  "landing-preview/s/w.html"
+ ],
+ "mode": "page",
+ "fonts": [
+  "Roboto Condensed"
+ ],
+ "required": [
+  "#top",
+  "#rosetta",
+  "#ira",
+  "#leha",
+  "#cassette",
+  "#spravedlivost",
+  "#about",
+  ".rg-tabs",
+  {
+   "sel": ".rg-desktop-nav",
+   "min": 1200
+  },
+  {
+   "sel": ".rg-mobile-header",
+   "max": 640
+  }
+ ],
+ "overlap": [
+  [
+   ".rg-desktop-nav",
+   ".rg-tabs"
+  ],
+  [
+   ".rg-mobile-header",
+   ".rg-tabs"
+  ]
+ ],
+ "settleMs": 1500,
+ "capture": {
+  "maxHeight": 1800,
+  "sheetHeight": 1100
+ },
+ "note": "preview.html holds hero + 5 shows + about; later sections are empty placeholders, so they are not required here."
+}
