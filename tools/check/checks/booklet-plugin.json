@@ -13,7 +13,8 @@
   "booklet/test-harness/th12.js",
   "booklet/test-harness/th13.js",
   "booklet/test-harness/th14.js",
-  "booklet/test-harness/th15.js"
+  "booklet/test-harness/th15.js",
+  "booklet/test-harness/th16.js"
  ],
  "smokeMs": 2500,
  "messages": [],
