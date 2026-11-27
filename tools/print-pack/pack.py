@@ -7,7 +7,8 @@ Needs: ghostscript, pikepdf, Pillow, numpy; profiles from apt package icc-profil
 Input file names carry the geometry the plugin wrote: <name>_<side>_<W>x<H>mm_b<bleed>_s<slug>.pdf
 What it does:
   1. Scales each page to real size (Figma 1 px = 1 pt; a 4 px/mm design scale is fixed here).
-  2. Art pages -> CMYK through the chosen profile (relative colorimetric); pure black -> 100% K (--rich-black: big black fills 60/40/40/100).
+  2. Art pages -> CMYK through the chosen profile (relative colorimetric); black text and lines -> 100% K, big black fills -> rich 60/40/40/100
+     (deeper on matte stock; --k-black for K only).
   3. Dieline page: magenta -> spot "CutContour", cyan -> spot "Fold", both overprint, nothing else on the page.
   4. Merges pages (front, back, dieline), sets TrimBox / BleedBox on every page, adds the output intent.
   5. Report: page size, trim, bleed, max total ink (TAC) per page, and a CMYK soft-proof PNG (rendered back through the profile).
@@ -113,7 +114,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('front'); ap.add_argument('back', nargs='?'); ap.add_argument('dieline', nargs='?')
     ap.add_argument('-o', '--out', required=True); ap.add_argument('--profile', default='fogra39')
-    ap.add_argument('--rich-black', action='store_true', help='black filled areas 60/40/40/100 instead of 100% K')
+    ap.add_argument('--k-black', action='store_true', help='all black 100% K (default: big black fills 60/40/40/100, text and lines 100% K)')
     a = ap.parse_args()
     prof = PROFILES.get(a.profile) or (a.profile, 'Custom', os.path.basename(a.profile), 300)
     icc = prof[0] if os.path.isabs(prof[0]) else ICC + prof[0]
@@ -130,7 +131,7 @@ def main():
         for dst, art in parts:
             p = pikepdf.open(dst)
             if not art: hits = dieline_spots(p)
-            else: blacks += fix_black(p, a.rich_black)
+            else: blacks += fix_black(p, not a.k_black)
             out.pages.extend(p.pages)
         for pg in out.pages:
             x0, y0 = s * PT, s * PT
